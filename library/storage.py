@@ -42,9 +42,9 @@ def load_library(library, path):
             record["title"],
             record["author"],
             record["isbn"],
-            record["borrow_count"],
         )
         book.is_borrowed = record.get("is_borrowed", False)
+        book.borrow_count = record.get("borrow_count", 0)
         library.books.append(book)
 
     library.members = []

@@ -41,7 +41,7 @@ class Library:
 
     def remove_member(self,member_id):
         member = self.find_member(member_id)
-        for book in Library.books:
+        for book in self.books:
             if book.isbn in member.borrowed_isbns:
                 raise ValueError(
                     f"A member with ID {member_id} still have books"
@@ -93,15 +93,26 @@ class Library:
         book.is_borrowed = False
         member.borrowed_isbns.remove(isbn)
     
-    def list_borrowed_books(self,member_id):
-        member = Library.find_member(member_id)
-        borrowed_books =[Library.find_book(isbn) for isbn in member.borrowed_isbns]
-        print(borrowed_books)
+    def list_borrowed_books(self, member_id):
+        member = self.find_member(member_id)
+
+        borrowed_books = [
+        self.find_book(isbn)
+        for isbn in member.borrowed_isbns
+        ]
+
+        for book in borrowed_books:
+            print(book)
     
     def available_books(self):
-        available_books = [Library.books[book]  for book in Library.books if book.is_borrowed == False]
-        print(available_books)
+        available_books = [ book for book in self.books if not book.is_borrowed]
+
+        for book in available_books:
+            print(book.title)
     
     def most_borrowed_book(self):
-        most= max(Library.books, key = lambda book: book.borrow_count)
+        if not self.books:
+            print("No books in the library.")
+            return
+        most= max(self.books, key = lambda book: book.borrow_count)
         print(most)

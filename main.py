@@ -46,20 +46,20 @@ def main():
         try:
 
             if choice == "1":
-                    try:
-                        title = input("Title: ").strip() 
-                    except ValueError:
-                        print("Title cannot be empty")
-                    try:
-                        author = input("Author: ").strip()
-                    except ValueError:
-                        print("Author cannot be empty")
-                    try:
-                        isbn = input("ISBN: ").strip()
-                    except ValueError:
-                        print("ISBN cannot be empty")
-                    library.add_book(Book(title, author, isbn))
-
+                    
+                title = input("Title: ").strip() 
+                if not title:
+                    print ("title cannot be empty")
+                    continue
+                author = input("Author: ").strip()
+                if not author:
+                    print("Author cannot be empty")
+                    continue
+                isbn = input("ISBN: ").strip()
+                if not isbn :
+                    print ("isbn cannot be empty")
+                    continue
+                library.add_book(Book(title, author, isbn))
             elif choice == "2":
                 isbn = input("ISBN to remove: ").strip()
                 library.remove_book(isbn)
@@ -70,9 +70,8 @@ def main():
                 library.add_member(Member(name, member_id))
 
             elif choice == "4":
-                name = input("Member name: ").strip()
                 member_id = input("Member ID: ").strip()
-                library.remove_member(Member(name, member_id))
+                library.remove_member(member_id)
 
             elif choice == "5":
                 keyword = input("Search keyword: ").strip()
@@ -85,7 +84,7 @@ def main():
                     print("-", book)
 
             elif choice == "7":
-                library.available_books
+                library.available_books()
 
             elif choice == "8":
                 member_id = input("Member ID: ").strip()
@@ -102,7 +101,7 @@ def main():
                 library.list_borrowed_books(member_id)
 
             elif choice == "11":
-                library.most_borrowed_book
+                library.most_borrowed_book()
 
             elif choice == "12":
                 save_library(library, DATA_FILE)
